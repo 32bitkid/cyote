@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Converter.js"></script>
+  <script type="text/javascript" src="js/story-machine-min.js"></script>
+  <link href="css/base.css" type="text/css" rel="stylesheet">
+  <title>Reverting a commit or merge</title>
+</head>
+<body>
+<h1>How do I revert a commit or merge?</h1>
+<script class="section" type="text/x-markdown" id="start">
+Let's say that something got backported to a release branch, and it's not working quite right.
+
+*Oops!* We need to roll it back! How do we do that?
+
+Well, lets start by switch to our release branch. Do you have a *local* branch that 
+you are trying to work with?
+
+  <a href="#switchToBranch" class="yes answer">Yes</a><a href="#makeABranch" class="no answer">No</a><a href="#listBranches" class="notsure answer">I don't know!</a>
+</script>
+
+<script class="section" type="text/x-markdown" id="switchToBranch">
+Okay, great! Now, let's switch to it.
+
+We can do that by using the `git checkout` command. If we wanted to switch
+to a branch named `release-1.0` then we would use this command from a bash
+console:
+
+    $ git checkout release-1.0
+<a href="#verifyUpToDate" class="ok answer">Got it...</a>
+</script>
+
+<script class="section" type="text/x-markdown" id="makeABranch">
+That is *alright*, but let's make one now.
+
+First of all, we need to update what we know about our remote. Let's say we had
+a remote called `origin`. We can use the `git fetch` command.
+
+    $ git fetch origin
+
+This will communicate with the remote, and update the branches that *our* repository
+knows about the *remote* repository.
+
+Now, we can actually make a branch. We can use the `git branch` command to do this.
+
+Now, let's say, our remote &ndash; `origin` &ndash; has a branch named
+`release-1.0`. We can make a *local* branch of that by using the following command:
+
+    $ git branch release-1.0 origin/release-1.0
+
+When this is done, we will have a new local branch named `release-1.0` that
+points at the same commit that `origin/release-1.0` does.
+  
+  <a href="#switchToCleanBranch" class="ok answer">Ok...</a>
+  </script>
+  
+<script class="section" type="text/x-markdown" id="switchToCleanBranch">
+Now that we have our branch, we need to switch to it.
+
+We can do that by using the `git checkout` command.
+
+    $ git checkout release-1.0
+
+> **Protip!**
+
+> You can create a branch an immediately switch to it
+by using the `git checkout -b` command.
+
+<a href="#revertSingleOrMerge" class="ok answer">Got it...</a>
+</script>
+  
+<script class="section" type="text/x-markdown" id="listBranches">
+*Tricky!* Well, let's try to find out.
+
+For this we can use the `git branch` command all by itself:
+
+    $ git branch
+
+This will print out all the *local* branches that you presently have. Do you
+see the branch you are looking for?
+  
+<a href="#switchToBranch" class="yes answer">Yes!</a><a href="#makeABranch" class="no answer">No.</a>
+</script>
+
+<script class="section" type="text/x-markdown" id="verifyUpToDate">
+Now, we need to make sure that our branch is up to date.
+
+First, we need to make sure our knowledge of our "remote" is up to date; we
+need to "fetch" from it. Suppose we had a remote called `origin`, we can fetch
+from it by running:
+
+    $ git fetch origin
+
+Once, that's done we need to make sure that *our local* branch is
+up to date with changes that have been done on the *remote* branch. We
+will use `git merge` for this.
+
+    $ git merge --ff-only origin/release-1.0 
+
+Note, the `--ff-only` option that is being passed to merge. This will force merge to
+only "fast-forward", if you have any local changes on this branch then this command 
+will fail.
+
+Did the merge work?
+  
+<a href="#revertSingleOrMerge" class="yes answer">Yes</a><a href="#dirtyWorkingSet" class="no answer">No</a>
+</script>
+
+<script class="section" type="text/x-markdown" id="dirtyWorkingSet">
+Oh no! But, all is not lost. What does that mean?
+
+This means that you have changes in your local branch, that do not exist on 
+the remote branch. This could be other changes that you have backported or
+other work/commits that you have done on this branch.
+
+If you aren't sure, then it's probably a good time right now to stop and find
+somebody to ask for help! 
+
+However you know, *for sure*, that nothing is important then you can use the 
+`git reset` command, to "reset" this branch.
+  
+<a href="#help" class="ok answer">Help!</a><a href="#resetAreYouSure" class="ok answer">I've got nothing important</a>
+</script>
+
+<script class="section" type="text/x-markdown" id="help">
+Okay, no worries. Leave this open, and go find the nearest developer. They
+should be able to help you get back on track!
+</script>
+
+<script class="section" type="text/x-markdown" id="resetAreYouSure">
+Are you *sure* that you don't have anything important here?!
+  
+<a href="#reset" class="yes answer">Yes!</a><a href="#help" class="no answer">No</a>
+</script>
+
+<script class="section" type="text/x-markdown" id="reset">
+Okay! Let's *do this!*
+
+We are going to use the `git reset` command to set your *local* branch 
+to point to a specific commit &ndash; in this case, the commit that
+the remote branch is at.
+
+    $ git reset --hard origin/release-1.0
+
+*Boom!*
+
+<a href="#revertSingleOrMerge" class="ok answer">All set</a>
+</script>
+
+<script class="section" type="text/x-markdown" id="revertSingleOrMerge">
+## Reversion Time
+
+Okay, we are ready to actually revert! Are reverting a single commit or a collection of 
+commits that were *merged* into this branch.
+
+<a href="#revertACommit" class="ok answer">A single commit</a>
+<a href="#revertAMerge" class="ok answer">A merge</a>
+<a href="#help" class="notsure answer">I don't know</a>
+</script>
+
+<script class="section" type="text/x-markdown" id="revertACommit">
+To revert a single commit, we will use the `git revert` command. 
+
+If you need to find the commit number, then you can use `git log`, or if you
+are more comfortable with GUI interfaces, or `gitk`.
+
+Once you know the commit number, then you can use it directly with `git revert`
+
+    $ git revert d8a1223
+
+<a href="#review" class="yes answer">It worked</a><a href="#help" class="no answer">Something went wrong</a>
+</script>
+
+<script class="section" type="text/x-markdown" id="revertAMerge">
+To revert a merge you will need to find the commit number of the *merge commit*.
+You might already have it, but if you dont you can use `git log` or `gitk` to try
+to find the commit you are looking for.
+
+Once you have the merge commit, we need to tell `git revert` to revert all the
+changes on *one side* of that merge. To do that, we need to tell `git revert` which
+one of the commit's parents represent the "mainline" side -- this will be the side
+that *does not* have the commits you are trying to revert. 
+
+> **Protip**
+>
+> Usually the "mainline" side is `1`
+
+Once you figure out which parent is the "mainline" side, then you can use the following command:
+
+    $ git revert d8a1223 -m 1
+
+This will create a new commit that will *revert* the changes from the entire branch
+
+<a href="#review" class="yes answer">It worked</a>
+<a href="#help" class="no answer">Something went wrong</a>
+</script>
+
+<script class="section" type="text/x-markdown" id="review">
+Once you get to this point, and you think you are all done, it's a great time
+to review the changes that you have made continuing on. You should probably
+take a quick second to look at `git log` and `gitk` to make sure that everything
+looks pretty good.
+
+It is probably also a good time to try to build the project and run the tests
+to make sure everything is in working order.
+
+<a href="#pushBack" class="answer yes">Looks good!</a>
+<a href="#help" class="answer no">Something looks fishy</a>
+</script>
+
+<script class="section" type="text/x-markdown" id="pushBack">
+So now, it is time to push your changes back to the remote. We 
+will use the `git push` command for this:
+
+    $ git push origin release-1.0
+
+And that's it! You've just reverted some changes to a branch!
+</script>
+  <script type="text/javascript">
+    var md = new Markdown.Converter();
+    
+    var config = { 
+      target: document.body,
+      elements: document.querySelectorAll(".section"),
+      register: { "text/x-markdown": md.makeHtml.bind(md) }
+    };
+    
+    storyMachine(config).render("start");      
+  </script>
+</body>
+</html>

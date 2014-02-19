@@ -1,0 +1,203 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic+400+800);
+@import url(http://fonts.googleapis.com/css?family=Raleway:600);
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  line-height: 1.75;
+  width: 85vw;
+  max-width: 45em;
+  margin: auto;
+  color: #556;
+  padding: 1em;
+  background-image: radial-gradient(circle at 50% 50%, #ffffff, #cccccc);
+  background-size: 100vw 100vh;
+  background-attachment: fixed;
+}
+h1 {
+  font-size: 1.5em;
+  text-align: center;
+}
+h2 {
+  font-size: 1.25em;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Raleway;
+  font-weight: 600;
+  color: #556;
+}
+h1,
+p {
+  margin-bottom: 1ex;
+}
+blockquote {
+  background-color: #ffc;
+  border: 1px solid #ff6;
+  padding: 0 1em;
+  margin: 0 1em;
+  margin-bottom: 1em;
+}
+pre {
+  background-color: #eee;
+  padding: 1ex;
+  overflow: auto;
+  border: 1px solid #ccc;
+  margin-bottom: 1ex;
+}
+em {
+  font-style: italic;
+}
+strong {
+  font-weight: bold;
+}
+p code {
+  padding: 0.3ex 1ex;
+  white-space: nowrap;
+}
+code {
+  font-family: Consolas, monospace;
+  background-color: #eee;
+}
+section.new {
+  opacity: 0;
+}
+section {
+  border: 1px solid #ccc;
+  padding: 1em;
+  background-color: white;
+  box-shadow: 0 1em 1em -1ex rgba(0, 0, 0, 0.25);
+  margin-bottom: 1.5em;
+  opacity: 1;
+  transition: all 500ms;
+}
+a.answer {
+  display: inline-block;
+  padding: 0.25ex 1em;
+  border-radius: 1ex;
+  border: 0.25ex solid #999;
+  cursor: pointer;
+  text-decoration: none;
+  box-sizing: border-box;
+  opacity: 0.7;
+  -webkit-transform: scale(0.8);
+  -moz-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  -o-transform: scale(0.8);
+  transform: scale(0.8);
+  transition: all 200ms;
+}
+a.answer:hover {
+  opacity: 1;
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transform: scale(1);
+}
+a.answer.yes {
+  background-color: #5AD427;
+  background-image: linear-gradient(180deg, #5ad427 0%, #a4e786 100%);
+  border-color: #A4E786;
+  color: white;
+}
+a.answer.no {
+  background-color: #FF2A68;
+  background-image: linear-gradient(180deg, #ff2a68 0%, #ff5e3a 100%);
+  border-color: #FF5E3A;
+  color: white;
+}
+a.answer.notsure,
+a.answer.ok {
+  background-color: #1D62F0;
+  background-image: linear-gradient(180deg, #1d62f0 0%, #1ad6fd 100%);
+  border-color: #1AD6FD;
+  color: white;
+}
+.complete {
+  opacity: 0.25;
+  -webkit-transform: scale(0.8);
+  -moz-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  -o-transform: scale(0.8);
+  transform: scale(0.8);
+}
+.complete:hover {
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transform: scale(1);
+  opacity: 1;
+}
+.complete a.answer {
+  cursor: default;
+  opacity: 0.2;
+  transition: all 2s;
+  -webkit-transform: scale(0.8);
+  -moz-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  -o-transform: scale(0.8);
+  transform: scale(0.8);
+}
+.complete a.answer.selected {
+  opacity: 1;
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transform: scale(1);
+}
